@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require("../keys.js");
 
 router.get("/", (req, res) => {
   res.send("hello");
@@ -47,6 +49,41 @@ router.post("/signup", (req, res) => {
         }
       })
       .catch((error) => console.log(error));
+  }
+});
+
+//  @route   POST /signin
+//  @desc    User Signin
+//  @access  Public
+router.post("/signin", (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res
+      .status(422)
+      .json({ error: "Both email and password are required" });
+  } else {
+    User.findOne({ email: email })
+      .then((savedUser) => {
+        if (!savedUser) {
+          return res.status(422).json({ error: "User is not registered" });
+        } else {
+          bcrypt.compare(password, savedUser.password).then(correctPassword=>{
+              if(correctPassword){
+                  //res.json({message: "Successfully signed in"});
+                  //when the user signs in, the server sends him back a token
+                  const token = jwt.sign({_id: savedUser._id},  JWT_SECRET);
+                  res.json({token});
+
+              }else{
+                  return res.status(422).json({error: "Invalid email or password"})
+              }
+          });
+        }
+      })
+      .catch(error=>{
+          console.log(error);
+      });
   }
 });
 
