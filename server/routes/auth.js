@@ -5,10 +5,15 @@ const User = mongoose.model("User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {JWT_SECRET} = require("../keys.js");
+const requireLogin = require("../middleware/requireLogin");
 
-router.get("/", (req, res) => {
-  res.send("hello");
+// @route    GET /protected
+// @desc     A demo route to demonstrate protected routes
+// @access   Protected   
+router.get("/protected", requireLogin, (req, res) => {
+  res.send("hello protected user");
 });
+
 
 // @route    POST /signup
 // @desc     User Signup to Database
