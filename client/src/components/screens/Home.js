@@ -13,7 +13,7 @@ const Home = () => {
           />
         </div>
         <div className="card-content">
-          <i class="large material-icons" style={{color: "red"}}>favorite_border</i>
+          <i className="large material-icons" style={{color: "red"}}>favorite_border</i>
           <h6>Title</h6>
           <p>Man in the box</p>
           <input type="text" placeholder="Add a comment" />
@@ -28,7 +28,7 @@ const Home = () => {
           />
         </div>
         <div className="card-content">
-          <i class="large material-icons" style={{color: "red"}}>favorite_border</i>
+          <i className="large material-icons" style={{color: "red"}}>favorite_border</i>
           <h6>Title</h6>
           <p>Man in the box</p>
           <input type="text" placeholder="Add a comment" />
@@ -43,7 +43,7 @@ const Home = () => {
           />
         </div>
         <div className="card-content">
-          <i class="large material-icons" style={{color: "red"}}>favorite_border</i>
+          <i className="large material-icons" style={{color: "red"}}>favorite_border</i>
           <h6>Title</h6>
           <p>Man in the box</p>
           <input type="text" placeholder="Add a comment" />
