@@ -38,4 +38,15 @@ router.get("/allposts", (req, res) => {
     .then((posts) => res.json({ posts }))
     .catch((err) => console.log(err));
 });
+
+// @route    GET /myposts
+// @desc     Retrieve all posts postedBy myself
+// @access   Public
+router.get("/myposts",requireLogin, (req, res) => {
+  Post.find({ postedBy: req.user._id })
+    .populate("postedBy", "_id name")
+    .then((mypost) => res.json({ mypost }))
+    .catch((err) => console.log(err));
+});
+
 module.exports = router;
