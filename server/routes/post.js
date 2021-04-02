@@ -9,8 +9,9 @@ const requireLogin = require("../middleware/requireLogin");
 //  @desc     Allows a user to create a post
 //  @access   Protected
 router.post("/createpost", requireLogin, (req, res) => {
-  const { title, body, image } = req.body;
-  if (!title || !body || !image) {
+  const { title, body, url } = req.body;
+  if (!title || !body || !url) {
+    console.log(title, body, url);
     return res.json({ error: "You must fill all of the fields" });
   } else {
     //console.log(req.user);
@@ -18,7 +19,7 @@ router.post("/createpost", requireLogin, (req, res) => {
     const post = new Post({
       title,
       body,
-      image,
+      photo: url,
       postedBy: req.user,
     });
 
