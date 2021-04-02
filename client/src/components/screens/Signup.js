@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import M from "materialize-css";
 
-
 const Signup = () => {
-  // could add client-side validation here 
-  // google regex for email, regex for password 
+  // could add client-side validation here
+  // google regex for email, regex for password
   const history = useHistory();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +14,7 @@ const Signup = () => {
       method: "post",
       headers: {
         "Content-Type": "application/json",
-        "mode": "cors"
+        mode: "cors",
       },
       body: JSON.stringify({
         name,
@@ -25,14 +24,22 @@ const Signup = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if(data.error){
-          M.toast({html: data.error, classes: "rounded #d50000 red accent-4"});
+        if (data.error) {
+          M.toast({
+            html: data.error,
+            classes: "rounded #d50000 red accent-4",
+          });
+        } else if (data.message) {
+          M.toast({
+            html: data.message,
+            classes: "rounded #8bc34a light-green",
+          });
+          history.push("/signin");
         }
-        else if(data.message){
-          M.toast({html: data.message, classes: "rounded #8bc34a light-green"});
-          history.push('/signin');
-        }
-        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <div className="my-card">
@@ -60,7 +67,7 @@ const Signup = () => {
           className="btn waves-effect waves-light #455a64 blue-grey darken-2"
           type="submit"
           name="action"
-          onClick={()=>postData()}
+          onClick={() => postData()}
         >
           SIGNUP
         </button>
